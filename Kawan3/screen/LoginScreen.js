@@ -103,7 +103,7 @@ class Login extends React.Component {
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('homeScreen1')}
+                                onPress={() => this.props.navigation.navigate('homeScreen')}
                                 style={s.btnlogin}>
 
                                 <LinearGradient start={[0, 1]} end={[1, 0]} colors={['#519BD1', '#38D1E6']} style={s.btngradien}

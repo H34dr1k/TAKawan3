@@ -100,7 +100,7 @@ class SignUp2 extends React.Component {
 
                     <View style={s.create}>
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('homeScreen1')}
+                            onPress={() => this.props.navigation.navigate('homeScreen')}
                             style={s.btnCreate}>
 
                             <LinearGradient start={[0, 1]} end={[1, 0]} colors={['#519BD1', '#38D1E6']} style={s.btngradien}>
