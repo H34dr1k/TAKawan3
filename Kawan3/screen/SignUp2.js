@@ -110,12 +110,6 @@ class SignUp2 extends React.Component {
                         </TouchableOpacity>     
                     </View>
 
-                    
-
-                   
-
-
-
                 </View>
             </AppFontLoader>
         );
