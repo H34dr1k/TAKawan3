@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, SafeAreaView, ScrollView, StatusBar, StatusBarStyle, Platform, View, Button, Image, ImageBackground, ActivityIndicator, TouchableOpacity, TextInput, ToastAndroid } from 'react-native';
+import { StyleSheet, Alert, SafeAreaView, ScrollView, StatusBar, StatusBarStyle, Platform, View, Button, Image, ImageBackground, ActivityIndicator, TouchableOpacity, TextInput, ToastAndroid } from 'react-native';
 
 import 'react-native-gesture-handler';
 import { createAppContainer } from 'react-navigation';
@@ -24,6 +24,8 @@ import { Col } from 'native-base';
 
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel, RadioWrap } from 'react-native-simple-radio-button';
 
+import * as firebase from 'firebase';
+
 var gender = [
     { label: "Male", value: 0},
     { label: "Female", value: 1},
@@ -41,8 +43,30 @@ class SignUp1 extends React.Component {
         super(props);
         this.state = {
             secureTextEntry: true,
-            iconName: "eye-outline"
+            iconName: "eye-outline",
+            email: "",
+            pass: "",
+            confPass: "",
+            username: ""
         }
+    }
+
+    onSignUpPress = () => {
+
+        if(this.state.pass != this.state.confPass){
+            Alert.alert("Password do not match");
+            return;
+        }
+
+        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass)
+            .then(() => {
+                // this.simpanUsername();
+                this.props.navigation.navigate('homeScreen');
+            }, (error) => {
+                Alert.alert(error.message);
+            });
+
+        
     }
 
     onIconPress = () => {
@@ -85,12 +109,23 @@ class SignUp1 extends React.Component {
                         </View>
 
                         <View>
+                            <Text type='rmedium' style={s.temail}>Email Address</Text>
+                            <TextInput style={s.femail}
+                                placeholder='Email Address'
+                                underlineColorAndroid={'transparent'}
+                                value={this.state.email}
+                                onChangeText={(text) => {this.setState({email: text}) }}
+                            />
+                        </View>
+
+                        <View>
                             <Text type='rmedium' style={s.tpw}>Password</Text>
                             <View style={s.fpw}>
                                 <TextInput style={{ flex: 1 }}
                                     placeholder='Password'
                                     secureTextEntry={this.state.secureTextEntry}
-                                ></TextInput>
+                                    value={this.state.pass}
+                                    onChangeText={(text) => {this.setState({pass: text}) }}/>
                                 <TouchableOpacity style={{}} onPress={this.onIconPress}>
                                     <Icon name={this.state.iconName} style={{ paddingTop: 0, justifyContent: "center" }} size={wp('8%')} color="black" />
                                 </TouchableOpacity>
@@ -103,7 +138,8 @@ class SignUp1 extends React.Component {
                                 <TextInput style={{ flex: 1 }}
                                     placeholder='Confirm your password'
                                     secureTextEntry={this.state.secureTextEntry}
-                                ></TextInput>
+                                    value={this.state.confPass}
+                                    onChangeText={(text) => {this.setState({confPass: text}) }}/>
                                 <TouchableOpacity style={{}} onPress={this.onIconPress}>
                                     <Icon name={this.state.iconName} style={{ paddingTop: 0, justifyContent: "center" }} size={wp('8%')} color="black" />
                                 </TouchableOpacity>
@@ -119,14 +155,6 @@ class SignUp1 extends React.Component {
                                 ></TextInput>
                             </View>
                         </View> */}
-
-                        <View>
-                            <Text type='rmedium' style={s.temail}>Email Address</Text>
-                            <TextInput style={s.femail}
-                                placeholder='Email Address'
-                                underlineColorAndroid={'transparent'}
-                            />
-                        </View>
 
                         <View style={s.gender}>
                             <RadioForm
@@ -150,14 +178,14 @@ class SignUp1 extends React.Component {
 
                     <View style={s.continue}>
                         <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('SignUp2')}
+                                onPress={this.onSignUpPress}
                                 style={s.btnlogin}>
 
                                 <LinearGradient start={[0, 1]} end={[1, 0]} colors={['#519BD1', '#38D1E6']} style={s.btngradien}>
                                     <Text type="rmedium" style={s.btnloginisi}>Continue</Text>
                                 </LinearGradient>
 
-                            </TouchableOpacity>     
+                            </TouchableOpacity>
                     </View>
 
                     

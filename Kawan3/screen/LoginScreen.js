@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyleSheet, SafeAreaView, ScrollView, StatusBar,StatusBarStyle, Platform, View, Button, Image, ImageBackground, ActivityIndicator, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, SafeAreaView, ScrollView, StatusBar,StatusBarStyle, Platform, View, Button, Image, ImageBackground, ActivityIndicator, TouchableOpacity, TextInput, Alert } from 'react-native';
 
 import 'react-native-gesture-handler';
 import { createAppContainer } from 'react-navigation';
@@ -21,9 +21,13 @@ import {
     widthPercentageToDP as wp,
 } from 'react-native-responsive-screen'
 
-
+import * as firebase from 'firebase';
 
 class Login extends React.Component {
+
+    componentWillUnmount(){
+        this.props.navigation.navigate('Intro');
+    }
 
     static navigationOptions = {
         header: null,
@@ -34,8 +38,38 @@ class Login extends React.Component {
         super(props);
             this.state = {
                 secureTextEntry: true,
-                iconName: "eye-outline"
+                iconName: "eye-outline",
+                email: "",
+                pass: "",
             }
+    }
+
+    signInWithGoogleAsync = async () =>  {
+        try {
+          const result = await Google.logInAsync({
+            behavior: 'web',
+            androidClientId: '459434791745-s8at2nv6d64akulhahvu7kkb2g563b0v.apps.googleusercontent.com',
+            // iosClientId: YOUR_CLIENT_ID_HERE,
+            scopes: ['profile', 'email'],
+          });
+      
+          if (result.type === 'success') {
+            return result.accessToken;
+          } else {
+            return { cancelled: true };
+          }
+        } catch (e) {
+          return { error: true };
+        }
+      }
+
+    onGooglePress = () => {
+        alert("I'm Google!");
+        this.signInWithGoogleAsync();
+    }
+
+    onFacebookPress = () => {
+        alert("I'm Facebook!");
     }
 
     onIconPress = () => {
@@ -59,7 +93,19 @@ class Login extends React.Component {
         });
     }
 
+    onLoginPress = () => {
+        
+        firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.pass)
+            .then(() => {
+                this.props.navigation.navigate('homeScreen');
+            }, (error) => {
+                Alert.alert(error.message);
+            });
+    }
 
+    onForgotPass = () => {
+        
+    }
     
     render() {
         
@@ -85,33 +131,37 @@ class Login extends React.Component {
                             <TextInput style={s.femail}
                             placeholder='Email Address'
                             selectionColor={'red'}
-                            underlineColorAndroid={'transparent'}/>
+                            underlineColorAndroid={'transparent'}
+                            value={this.state.email}
+                            onChangeText={(text) => {this.setState({email: text}) }}/>
 
                             <Text type='rmedium' style={s.tpw}>Password</Text>
                             <View style={s.fpw}>
                                 <TextInput style={{flex:1}}
                                     placeholder='Password'
                                     secureTextEntry={this.state.secureTextEntry}
+                                    value={this.state.pass}
+                                    onChangeText={(text) => { this.setState({ pass: text }) }}
                                 />
                                 <TouchableOpacity onPress={this.onIconPress}>
                                     <Icon name={this.state.iconName} style={{paddingTop:hp('-1%'), justifyContent:"center"}} size={wp('8%')} color="black" />
                                 </TouchableOpacity>
                             </View>
 
-                            <TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={this.onForgotPass}>
                                 <Text type='rmedium' style={{ textAlign: 'right', marginTop: normalize(10), color: '#38D1E6' }}>Forgot Password?</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity
-                                onPress={() => this.props.navigation.navigate('homeScreen')}
+                                onPress={this.onLoginPress}
                                 style={s.btnlogin}>
 
-                                <LinearGradient start={[0, 1]} end={[1, 0]} colors={['#519BD1', '#38D1E6']} style={s.btngradien}
-                                >
+                                <LinearGradient start={[0, 1]} end={[1, 0]} colors={['#519BD1', '#38D1E6']} style={s.btngradien}>
                                     <Text type="rmedium" style={s.btnloginisi}>LOGIN</Text>
                                 </LinearGradient>
 
-                            </TouchableOpacity>                            
+                            </TouchableOpacity>
                         </View>
                     </View>
 
@@ -125,11 +175,11 @@ class Login extends React.Component {
                                     <TouchableOpacity>
                                         <Text style={{color:'#fff'}}>a</Text>
                                     </TouchableOpacity>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={this.onGooglePress}> 
                                 <Image source={require('../src/img/google.png')} style={{resizeMode:"contain", width: wp('14%'), height:hp('7%')}} />
                             </TouchableOpacity>
                         
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={this.onFacebookPress}>
                                 <Image source={require('../src/img/facebook.png')} style={{ resizeMode: "contain", width: wp('14%'), height: hp('7%') }} />
                             </TouchableOpacity>
                                     <TouchableOpacity>

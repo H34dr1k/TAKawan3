@@ -4,11 +4,21 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import 'react-native-gesture-handler';
 
+import * as firebase from 'firebase';
+
 class profilScreen extends React.Component {
     static navigationOptions= {
         title: 'profilScreen',
         header: null
     }
+
+    onLogOutPress = () => {
+        firebase.auth().signOut()
+            .then(() => {
+                this.props.navigation.navigate('Login');
+            });
+    }
+
     render(){
         return(
             <View style={{flex: 1}}>
@@ -28,7 +38,9 @@ class profilScreen extends React.Component {
                 </View>
                 <View style={{flex: 1, width: '100%', height: '100%', backgroundColor: 'white', borderTopLeftRadius: 50, borderTopRightRadius: 50, marginTop: -45}}>
                     <View style={{marginHorizontal: 26, flexDirection: 'row'}}>
-                        <TouchableOpacity style={{marginTop: 33, width: 80, height: 28, backgroundColor: '#F84B14', borderRadius: 7}}>
+                        <TouchableOpacity 
+                            style={{marginTop: 33, width: 80, height: 28, backgroundColor: '#F84B14', borderRadius: 7}}
+                            onPress={this.onLogOutPress}>
                             <Text style={{marginTop: 3, textAlign: 'center', justifyContent: 'center', fontWeight: 'bold', color: 'white'}}>Log Out</Text>
                         </TouchableOpacity>
                         <View style={{marginTop: -80}}>

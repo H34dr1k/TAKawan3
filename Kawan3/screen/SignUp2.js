@@ -27,14 +27,14 @@ class SignUp2 extends React.Component {
         // TODO: call API to check code here
         // If code does not match, clear input with: this.refs.codeInputRef1.clear()
         if (code == 'HENDR') {
-            Alert.alert(
+            alert(
                 'Confirmation Code',
                 'Successful!',
                 [{ text: 'OK' }],
                 { cancelable: false }
             );
         } else {
-            Alert.alert(
+            alert(
                 'Confirmation Code',
                 'Code not match!',
                 [{ text: 'OK' }],

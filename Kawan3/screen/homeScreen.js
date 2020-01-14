@@ -6,6 +6,10 @@ import 'react-native-gesture-handler';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 class homeScreen extends React.Component {
+  componentDidMount = () => {
+    
+  }
+
     static navigationOptions= {
         title: 'homeScreen',
         header: null

@@ -12,11 +12,11 @@ import Text from './components/customText.js';
 import { AppFontLoader } from './components/AppFontLoader.js';
 
 import Intro from './screen/IntroScreen'
+import Loading from './screen/LoadingScreen'
 import Login from './screen/LoginScreen'
 import SignUp1 from './screen/SignUp1'
 import SignUp2 from './screen/SignUp2'
 import homeScreen1 from './screen/homeScreen1'
-import Loading from './screen/LoadingScreen'
 import homeScreen from './screen/homeScreen'
 import profilScreen from './screen/profilScreen'
 import communityScreen from './screen/communityScreen'
@@ -27,9 +27,25 @@ import settingPrivasi from './screen/settingPrivasi'
 import settingNotif from './screen/settingNotif'
 import settingAbout from './screen/settingAbout'
 
+import firebase from 'firebase';
+import {firebaseConfig} from './config';
+
+try{
+    firebase.initializeApp(firebaseConfig);
+}catch (err) {
+    // we skip the "already exists" message which is
+    // not an actual error when we're hot-reloading
+    if (!/already exists/.test(err.message)) {
+    console.error('Firebase initialization error', err.stack)
+    }
+}
+
 const AppNavigator = createStackNavigator({
     Intro: { 
         screen: Intro
+    },
+    Loading: {
+        screen: Loading
     },
     Login: { 
         screen: Login

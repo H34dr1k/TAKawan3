@@ -22,6 +22,7 @@ class Intro extends React.Component {
     }
 
     render() {
+
         return (
             <AppFontLoader>
                 <View style={styles.container}>
@@ -35,7 +36,7 @@ class Intro extends React.Component {
                         <Text style={styles.subjudul}>Thank you for downloading our application. Hope you enjoy and like it. Good luck at find your best friend here!</Text>
 
                         <TouchableOpacity
-                            onPress={() => this.props.navigation.navigate('Login')}
+                            onPress={() => this.props.navigation.navigate('Loading')}
                             style={styles.btnmulai}>
 
                             <LinearGradient start={[0, 1]} end={[1, 0]} colors={['#519BD1', '#38D1E6']} style={styles.btngradien}>
