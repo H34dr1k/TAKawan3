@@ -16,12 +16,13 @@ import {
 
 class Intro extends React.Component {
 
-    static navigationOptions = {
-        title: 'Intro',
-        header: null
-    }
+  static navigationOptions = {
+    title: 'Intro',
+    header: null
+  }
 
     render() {
+      
 
         return (
             <AppFontLoader>

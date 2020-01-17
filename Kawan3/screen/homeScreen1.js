@@ -27,6 +27,7 @@ class homeScreen1 extends React.Component {
             <AppFontLoader>
                 <SafeAreaView style={s.container}>
                     <View>
+                        <StatusBar barStyle="dark-content" barAnimation="slide" />
                         <Text style={{fontSize:hp('4%')}}>New Screen</Text>
                     </View>
                 </SafeAreaView>

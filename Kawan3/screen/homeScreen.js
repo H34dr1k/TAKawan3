@@ -9,7 +9,6 @@ class homeScreen extends React.Component {
   componentDidMount = () => {
     
   }
-
     static navigationOptions= {
         title: 'homeScreen',
         header: null
@@ -30,7 +29,7 @@ class homeScreen extends React.Component {
             <TouchableOpacity>
               <Image source={require('../src/image/History.png')} style={{marginRight: 13}}/>  
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.navigation.navigate('notifScreen')}>
               <Image source={require('../src/image/Notif.png')}/>
             </TouchableOpacity>
           </View>

@@ -26,6 +26,7 @@ import settingScreen from './screen/settingScreen'
 import settingPrivasi from './screen/settingPrivasi'
 import settingNotif from './screen/settingNotif'
 import settingAbout from './screen/settingAbout'
+import notifScreen from './screen/notificationScreen'
 
 import firebase from 'firebase';
 import {firebaseConfig} from './config';
@@ -88,6 +89,9 @@ const AppNavigator = createStackNavigator({
     },
     settingAbout: {
         screen: settingAbout
+    },
+    notifScreen: {
+        screen: notifScreen
     },
 },
 
