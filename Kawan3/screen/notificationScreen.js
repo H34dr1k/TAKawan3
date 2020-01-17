@@ -161,6 +161,7 @@ const s = StyleSheet.create({
         height: hp('16%'),
         borderRadius: 15,
         marginBottom: hp('2%'),
+        color: "#fff",
     },
 
 });
