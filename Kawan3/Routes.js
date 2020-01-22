@@ -96,7 +96,7 @@ const AppNavigator = createStackNavigator({
 },
 
     {
-        initialRouteName: 'Intro',
+        initialRouteName: 'homeScreen',
         defaultNavigationOptions: {
             headerStyle: {
                 backgroundColor: '',
