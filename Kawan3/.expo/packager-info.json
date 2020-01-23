@@ -2,9 +2,9 @@
   "expoServerPort": 19000,
   "devToolsPort": 19002,
   "packagerPort": 19001,
-  "packagerPid": 2116,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "packagerPid": 4032,
+  "expoServerNgrokUrl": "https://n7-hzs.cleiment.kawan3.exp.direct",
+  "packagerNgrokUrl": "https://packager.n7-hzs.cleiment.kawan3.exp.direct",
+  "ngrokPid": 5516,
   "webpackServerPort": null
 }

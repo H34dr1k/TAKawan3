@@ -63,15 +63,10 @@ class SignUp1 extends React.Component {
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass)
             .then(() => {
                 this.simpanUsername();
-                // this.props.navigation.navigate('homeScreen');
             }, (error) => {
                 Alert.alert(error.message);
             });
     }
-
-    componentDidMount = () => {
-        this.simpanUsername();
-    };
 
     simpanUsername = () => {
         this.ref.add({
@@ -83,7 +78,8 @@ class SignUp1 extends React.Component {
                 email: '',
                 gender: 'Male',
                 username: ''
-            })
+            });
+            this.props.navigation.navigate('homeScreen');
         });
     };
 
@@ -122,7 +118,9 @@ class SignUp1 extends React.Component {
                             <Text type='rmedium' style={s.tusername}>Username</Text>
                             <TextInput style={s.fusername}
                                 placeholder='Username'
+                                value={this.state.username}
                                 underlineColorAndroid={'transparent'} 
+                                onChangeText={(text) => {this.setState({username: text})}}
                             />
                         </View>
 
