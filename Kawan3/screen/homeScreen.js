@@ -16,6 +16,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import * as firebase from 'firebase';
 
 class homeScreen extends React.Component {
   componentDidMount = () => {};
@@ -23,9 +24,57 @@ class homeScreen extends React.Component {
     title: "homeScreen",
     header: null
   };
+
+  constructor(props){
+    super(props);
+    this.state ={
+      email: "",
+      name: "",
+      gender: "",
+      date: ""
+    };
+    this.ref = firebase.firestore().collection("Accounts");
+  }
+
   _onPressButton() {
     Alert.alert("Join Success");
   }
+
+  UNSAFE_componentWillMount() {
+    var email = firebase.auth().currentUser.email
+    var e = "";
+    var n = "";
+    var g = "";
+
+    this.ref.get().then(ss => {
+        ss.docs.forEach(doc => {
+            if(email == doc.get("email")){
+                e = doc.get("email");
+                n = doc.get("username");
+                g = doc.get("gender");
+            }
+        });
+    
+        this.setState({
+            email: e,
+            name: n,
+            gender: g
+        })
+    });
+
+    var months = ["", "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    var days = ["","Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+
+    var day = days[new Date().getDay()];
+    var date = new Date().getDate();
+    var month = months[new Date().getMonth() + 1];
+    var year = new Date().getFullYear();
+
+    this.setState({
+      date: day + ", " + date + " " + month + " " + year
+    })
+  }
+
   render() {
     return (
       <View style={{ flex: 1, backgroundColor: "#E5E5E5" }}>
@@ -73,10 +122,10 @@ class homeScreen extends React.Component {
               <Text
                 style={{ fontSize: 20, fontWeight: "bold", color: "white" }}
               >
-                Hello, Hendrik Krisma!
+                Hello, {this.state.name}!
               </Text>
               <Text style={{ fontSize: 16, marginTop: 10, color: "white" }}>
-                Tuesday, 11 November 2019
+                {this.state.date}
               </Text>
             </View>
           </View>

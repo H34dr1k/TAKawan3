@@ -25,6 +25,7 @@ import { Col } from 'native-base';
 import RadioForm, { RadioButton, RadioButtonInput, RadioButtonLabel, RadioWrap } from 'react-native-simple-radio-button';
 
 import * as firebase from 'firebase';
+import '@firebase/firestore';
 
 var gender = [
     { label: "Male", value: 0},
@@ -49,6 +50,7 @@ class SignUp1 extends React.Component {
             confPass: "",
             username: ""
         }
+        this.ref = firebase.firestore().collection("Accounts");
     }
 
     onSignUpPress = () => {
@@ -60,14 +62,30 @@ class SignUp1 extends React.Component {
 
         firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.pass)
             .then(() => {
-                // this.simpanUsername();
-                this.props.navigation.navigate('homeScreen');
+                this.simpanUsername();
+                // this.props.navigation.navigate('homeScreen');
             }, (error) => {
                 Alert.alert(error.message);
             });
-
-        
     }
+
+    componentDidMount = () => {
+        this.simpanUsername();
+    };
+
+    simpanUsername = () => {
+        this.ref.add({
+            email: this.state.email,
+            gender: "Male",
+            username: this.state.username
+        }).then((data) => {
+            this.setState({
+                email: '',
+                gender: 'Male',
+                username: ''
+            })
+        });
+    };
 
     onIconPress = () => {
         let iconName = (this.state.secureTextEntry) ? "eye-off-outline" : "eye-outline";

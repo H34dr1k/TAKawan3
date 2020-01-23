@@ -12,11 +12,44 @@ class profilScreen extends React.Component {
         header: null
     }
 
+    constructor(props){
+        super(props);
+        this.ref = firebase.firestore().collection("Accounts")
+        this.state = {
+            name: "",
+            email: "",
+            gender: ""
+        }
+    }
+
     onLogOutPress = () => {
         firebase.auth().signOut()
             .then(() => {
                 this.props.navigation.navigate('Login');
             });
+    }
+
+    UNSAFE_componentWillMount = () => {
+        var email = firebase.auth().currentUser.email
+        var e = "";
+        var n = "";
+        var g = "";
+
+        this.ref.get().then(ss => {
+            ss.docs.forEach(doc => {
+                if(email == doc.get("email")){
+                    e = doc.get("email");
+                    n = doc.get("username");
+                    g = doc.get("gender");
+                }
+            });
+        
+            this.setState({
+                "email": e,
+                "name": n,
+                "gender": g
+            })
+        });
     }
 
     render(){
@@ -55,7 +88,7 @@ class profilScreen extends React.Component {
                     </View>
                     <View style={{flexDirection: 'row', marginHorizontal: 26, marginTop: 20, justifyContent: 'center', alignItems: 'center'}}>
                         <View>
-                            <Text style={{fontSize: 23, fontWeight: 'bold', color: '#526EDD', textAlign: 'center'}}>Hendrik Krisma</Text>
+                            <Text style={{fontSize: 23, fontWeight: 'bold', color: '#526EDD', textAlign: 'center'}}>{this.state.name}</Text>
                             <Text style={{fontSize: 13, color: 'gray', textAlign: 'center'}}>I like progamming and playing football</Text>
                         </View>
                     </View>
